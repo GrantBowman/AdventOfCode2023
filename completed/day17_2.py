@@ -5,44 +5,6 @@ from sys import maxsize
 import copy
 import heapq 
 
-stepLimit = 3
-n = 0b1000
-w = 0b0100
-s = 0b0010
-e = 0b0001
-
-def getInHeap(toVisitHeap, x1=None, y1=None, l1=None):
-    results = []
-    for item in toVisitHeap:
-        dist, x2, y2, l2 = item
-        if (not x1 or x1==x2) and (not y1 or y1==y2) and (not l1 or l1==l2):
-            results.append(item)
-    return results
-
-def updateDijkstra(toVisitHeap, distGrid, visitGrid, grid, x, y, level, fromDist):
-    # add to visited if not in
-    if visitGrid[level][x][y] == 0:
-        visitGrid[level][x][y] = 1
-        dist = curDist + grid[x][y]
-        distGrid[level][x][y] = dist
-        heapq.heappush(toVisitHeap, (dist, x, y, level))
-    # else update its value
-    elif visitGrid[level][x][y] == 1:
-        dist = min(distGrid[level][x][y], curDist + grid[x][y])
-        distGrid[level][x][y] = dist
-        # update every level in the grid
-        for item in getInHeap(toVisitHeap, x, y, level):
-            # 
-            newDist = min(dist,item[0])
-            heapq.heapreplace(toVisitHeap, (item[0], x, y, level))
-    # put it back in if the path could be shorter
-    # elif visitGrid[level][x][y] == 2:
-    #     dist = curDist + grid[x][y]
-    #     if dist < distGrid[level][x][y]:
-    #         distGrid[level][x][y] = dist
-    #         visitGrid[level][x][y] = 1
-    #         heapq.heappush(toVisitHeap, (dist, x, y, level))
-
 with open("input17.txt") as input:
     print("hello world")
     sum = 0
